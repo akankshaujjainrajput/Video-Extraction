@@ -78,15 +78,30 @@ def download_audio(url):
         
         # Configure yt-dlp options
         ydl_opts = {
-            'format': 'bestaudio[ext=m4a]/bestaudio[ext=webm]/bestaudio',
+            'format': 'bestaudio/best',
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }],
             'outtmpl': os.path.join(temp_dir, 'audio.%(ext)s'),  # Use absolute path
             'noplaylist': True,
-            'quiet': False,
-            'no_warnings': False,
-            'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            'extractor_retries': 3,
-            'fragment_retries': 3,
-            'retry_sleep_functions': {'http': lambda n: min(2**n, 60)},
+            'quiet': True,
+            'no_warnings': True,
+            'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'extractor_retries': 5,
+            'fragment_retries': 5,
+            'socket_timeout': 60,
+            'http_headers': {
+                'Accept-Language': 'en-US,en;q=0.9',
+                'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
+                'Accept-Encoding': 'gzip, deflate',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'DNT': '1',
+                'Connection': 'keep-alive',
+                'Upgrade-Insecure-Requests': '1'
+            },
+            'skip_unavailable_fragments': True,
         }
         
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
