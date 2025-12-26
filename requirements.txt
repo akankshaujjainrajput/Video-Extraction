@@ -1,0 +1,19 @@
+streamlit==1.32.0
+
+# YouTube audio download
+yt-dlp>=2024.12.26
+
+# Audio processing
+ffmpeg-python==0.2.0
+pydub==0.25.1
+
+# Speech-to-Text (Open Source)
+openai-whisper==20231117
+
+# Text summarization (NON-transformer, classical NLP)
+sumy==0.11.0
+nltk==3.8.1
+
+# Utilities
+numpy==1.26.4
+tqdm==4.66.2
